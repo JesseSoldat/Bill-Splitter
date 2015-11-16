@@ -42,9 +42,9 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var DashController = function DashController($scope) {};
+var DashController = function DashController($scope, $state) {};
 
-DashController.$inject = ['$scope'];
+DashController.$inject = ['$scope', '$state'];
 
 exports['default'] = DashController;
 module.exports = exports['default'];
@@ -76,17 +76,24 @@ exports['default'] = LayoutController;
 module.exports = exports['default'];
 
 },{}],5:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var AddRoomController = function AddRoomController() {};
+var AddRoomController = function AddRoomController($scope, $state) {
 
-AddRoomController.$inject = [];
+  //GO BACK
+  $scope.goBack = function () {
+    $state.go('root.room');
+  };
+  //-------------------------------
+};
 
-exports["default"] = AddRoomController;
-module.exports = exports["default"];
+AddRoomController.$inject = ['$scope', '$state'];
+
+exports['default'] = AddRoomController;
+module.exports = exports['default'];
 
 },{}],6:[function(require,module,exports){
 'use strict';
@@ -94,15 +101,25 @@ module.exports = exports["default"];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var RoomController = function RoomController($scope, $state) {
+var RoomController = function RoomController($scope, $state, RoomService) {
+  console.log('RoomController');
 
+  //Get a list of roommates
+  RoomService.getRoom().then(function (res) {
+
+    $scope.roommates = res.data.results;
+  });
   //Go to the add roommate page
   $scope.addRoomPage = function () {
     $state.go('root.roomAdd');
   };
+  //GO BACK
+  $scope.goBack = function () {
+    $state.go('root.dashboard');
+  };
 };
 
-RoomController.$inject = ['$scope', '$state'];
+RoomController.$inject = ['$scope', '$state', 'RoomService'];
 
 exports['default'] = RoomController;
 module.exports = exports['default'];
@@ -150,20 +167,40 @@ var _servicesRoomService = require('./services/room.service');
 
 var _servicesRoomService2 = _interopRequireDefault(_servicesRoomService);
 
-_angular2['default'].module('app', ['ui.router']).config(_config2['default']).controller('LayoutController', _controllersLayoutController2['default']).controller('HomeController', _controllersHomeController2['default']).controller('DashController', _controllersDashController2['default']).controller('RoomController', _controllersRoomController2['default']).controller('AddRoomController', _controllersRoomAddController2['default']).service('RoomService', 'RoomService');
+_angular2['default'].module('app', ['ui.router']).constant('PARSE', {
+  URL: 'https://api.parse.com/1/',
+  CONFIG: {
+    headers: {
+      'X-Parse-Application-Id': 'oO0ERTmhPMthgXICGzBJVWXol20xz2fp3rglPqIE',
+      'X-Parse-REST-API-Key': 'Mugv4291WkDyENpp8RA6a1qlIUiIWHqBPpIZ1bBK'
+    }
+  }
+}).config(_config2['default']).controller('LayoutController', _controllersLayoutController2['default']).controller('HomeController', _controllersHomeController2['default']).controller('DashController', _controllersDashController2['default']).controller('RoomController', _controllersRoomController2['default']).controller('AddRoomController', _controllersRoomAddController2['default']).service('RoomService', _servicesRoomService2['default']);
 
 },{"./config":1,"./controllers/dash.controller":2,"./controllers/home.controller":3,"./controllers/layout.controller":4,"./controllers/room.add.controller":5,"./controllers/room.controller":6,"./services/room.service":8,"angular":11,"angular-ui-router":9}],8:[function(require,module,exports){
-"use strict";
+'use strict';
 
-Object.defineProperty(exports, "__esModule", {
+Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var RoomService = function RoomService() {};
+var RoomService = function RoomService($http, PARSE) {
 
-RoomService.$inject = [];
+  var url = PARSE.URL + 'classes/roommates';
 
-exports["default"] = RoomService;
-module.exports = exports["default"];
+  this.getRoom = function () {
+    return $http({
+      url: url,
+      headers: PARSE.CONFIG.headers,
+      method: 'GET',
+      cache: true
+    });
+  };
+};
+
+RoomService.$inject = ['$http', 'PARSE'];
+
+exports['default'] = RoomService;
+module.exports = exports['default'];
 
 },{}],9:[function(require,module,exports){
 /**

@@ -1,9 +1,9 @@
-let DashController = function($scope) {
+let DashController = function($scope, $state) {
   
   
 
 };
 
-DashController.$inject = ['$scope'];
+DashController.$inject = ['$scope', '$state'];
 
 export default DashController;

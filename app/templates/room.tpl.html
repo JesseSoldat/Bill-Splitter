@@ -1,4 +1,13 @@
-<h1>Roommates</h1>
+<h2>Roommates</h2>
 
+<div ng-repeat="roommate in roommates">
+  <div class="roommateInfo">
+    <h4>{{roommate.firstname}} {{roommate.lastname}}</h4>
+    <h4>{{roommate.email}}</h4>
+  </div>
+</div>
 
-<button ng-click="addRoomPage()">Add Roommate</button>
+<div class="buttonWrapper">
+  <button ng-click="addRoomPage()">Add Roommate</button>
+  <button ng-click="goBack()">Go Back</button>
+</div>
