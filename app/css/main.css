@@ -1,6 +1,9 @@
 body {
   background: #e2ebf3; }
 
+a {
+  text-decoration: none; }
+
 button {
   margin: 1%;
   padding: 1%;
@@ -14,6 +17,7 @@ button {
 .roommateInfo {
   width: 200px;
   height: 200px;
+  float: left;
   margin: 3%;
   padding: 2%;
   background-color: white;

@@ -81,7 +81,15 @@ module.exports = exports['default'];
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-var AddRoomController = function AddRoomController($scope, $state) {
+var AddRoomController = function AddRoomController($scope, $state, RoomService) {
+
+  //Add a roommate
+  $scope.addRoom = function (obj) {
+    RoomService.addRoom(obj).then(function (res) {
+      $scope.roommate = {};
+      alert('added a roommate!');
+    });
+  };
 
   //GO BACK
   $scope.goBack = function () {
@@ -90,7 +98,7 @@ var AddRoomController = function AddRoomController($scope, $state) {
   //-------------------------------
 };
 
-AddRoomController.$inject = ['$scope', '$state'];
+AddRoomController.$inject = ['$scope', '$state', 'RoomService'];
 
 exports['default'] = AddRoomController;
 module.exports = exports['default'];
@@ -102,11 +110,10 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 var RoomController = function RoomController($scope, $state, RoomService) {
-  console.log('RoomController');
+  // console.log('RoomController');
 
   //Get a list of roommates
   RoomService.getRoom().then(function (res) {
-
     $scope.roommates = res.data.results;
   });
   //Go to the add roommate page
@@ -125,6 +132,9 @@ exports['default'] = RoomController;
 module.exports = exports['default'];
 
 },{}],7:[function(require,module,exports){
+"use strict";
+
+},{}],8:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
@@ -157,6 +167,10 @@ var _controllersRoomController = require('./controllers/room.controller');
 
 var _controllersRoomController2 = _interopRequireDefault(_controllersRoomController);
 
+var _controllersRoomSingleController = require('./controllers/room.single.controller');
+
+var _controllersRoomSingleController2 = _interopRequireDefault(_controllersRoomSingleController);
+
 var _controllersRoomAddController = require('./controllers/room.add.controller');
 
 var _controllersRoomAddController2 = _interopRequireDefault(_controllersRoomAddController);
@@ -175,9 +189,9 @@ _angular2['default'].module('app', ['ui.router']).constant('PARSE', {
       'X-Parse-REST-API-Key': 'Mugv4291WkDyENpp8RA6a1qlIUiIWHqBPpIZ1bBK'
     }
   }
-}).config(_config2['default']).controller('LayoutController', _controllersLayoutController2['default']).controller('HomeController', _controllersHomeController2['default']).controller('DashController', _controllersDashController2['default']).controller('RoomController', _controllersRoomController2['default']).controller('AddRoomController', _controllersRoomAddController2['default']).service('RoomService', _servicesRoomService2['default']);
+}).config(_config2['default']).controller('LayoutController', _controllersLayoutController2['default']).controller('HomeController', _controllersHomeController2['default']).controller('DashController', _controllersDashController2['default']).controller('RoomController', _controllersRoomController2['default']).controller('SingleRoomController', _controllersRoomSingleController2['default']).controller('AddRoomController', _controllersRoomAddController2['default']).service('RoomService', _servicesRoomService2['default']);
 
-},{"./config":1,"./controllers/dash.controller":2,"./controllers/home.controller":3,"./controllers/layout.controller":4,"./controllers/room.add.controller":5,"./controllers/room.controller":6,"./services/room.service":8,"angular":11,"angular-ui-router":9}],8:[function(require,module,exports){
+},{"./config":1,"./controllers/dash.controller":2,"./controllers/home.controller":3,"./controllers/layout.controller":4,"./controllers/room.add.controller":5,"./controllers/room.controller":6,"./controllers/room.single.controller":7,"./services/room.service":9,"angular":12,"angular-ui-router":10}],9:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -187,6 +201,7 @@ var RoomService = function RoomService($http, PARSE) {
 
   var url = PARSE.URL + 'classes/roommates';
 
+  //View all roommates
   this.getRoom = function () {
     return $http({
       url: url,
@@ -195,6 +210,18 @@ var RoomService = function RoomService($http, PARSE) {
       cache: true
     });
   };
+  //Add a roommate
+  var Roommate = function Roommate(obj) {
+    this.firstname = obj.firstname;
+    this.lastname = obj.lastname;
+    this.email = obj.email;
+  };
+
+  this.addRoom = function (obj) {
+    // console.log(obj);
+    var room = new Roommate(obj);
+    return $http.post(url, room, PARSE.CONFIG);
+  };
 };
 
 RoomService.$inject = ['$http', 'PARSE'];
@@ -202,7 +229,7 @@ RoomService.$inject = ['$http', 'PARSE'];
 exports['default'] = RoomService;
 module.exports = exports['default'];
 
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 /**
  * State-based routing for AngularJS
  * @version v0.2.15
@@ -4573,7 +4600,7 @@ angular.module('ui.router.state')
   .filter('isState', $IsStateFilter)
   .filter('includedByState', $IncludedByStateFilter);
 })(window, window.angular);
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /**
  * @license AngularJS v1.4.7
  * (c) 2010-2015 Google, Inc. http://angularjs.org
@@ -33478,11 +33505,11 @@ $provide.value("$locale", {
 })(window, document);
 
 !window.angular.$$csp().noInlineStyle && window.angular.element(document.head).prepend('<style type="text/css">@charset "UTF-8";[ng\\:cloak],[ng-cloak],[data-ng-cloak],[x-ng-cloak],.ng-cloak,.x-ng-cloak,.ng-hide:not(.ng-hide-animate){display:none !important;}ng\\:form{display:block;}.ng-animate-shim{visibility:hidden;}.ng-anchor{position:absolute;}</style>');
-},{}],11:[function(require,module,exports){
+},{}],12:[function(require,module,exports){
 require('./angular');
 module.exports = angular;
 
-},{"./angular":10}]},{},[7])
+},{"./angular":11}]},{},[8])
 
 
 //# sourceMappingURL=main.js.map

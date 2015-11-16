@@ -1,10 +1,9 @@
 let RoomController = function($scope, $state, RoomService) {
-  console.log('RoomController');
+  // console.log('RoomController');
 
 
   //Get a list of roommates
   RoomService.getRoom().then( (res) => {
-   
     $scope.roommates = res.data.results;
   });
   //Go to the add roommate page

@@ -9,6 +9,7 @@ import LayoutController from './controllers/layout.controller'
 import HomeController from './controllers/home.controller'
 import DashController from './controllers/dash.controller'
 import RoomController from './controllers/room.controller';
+import SingleRoomController from './controllers/room.single.controller';
 import AddRoomController from './controllers/room.add.controller';
 
 //Services
@@ -31,6 +32,7 @@ angular
   .controller('HomeController', HomeController)
   .controller('DashController', DashController)
   .controller('RoomController', RoomController)
+  .controller('SingleRoomController', SingleRoomController)
   .controller('AddRoomController', AddRoomController)
 
 

@@ -1,2 +1,10 @@
-<h2>Add Roomates</h2>
+<div>
+  <h2>Add Roomates</h2> 
+  <form class="siteForm" ng-submit="addRoom(roommate)">
+    <input ng-model="roommate.firstname" type="text" placeholder="First Name">
+    <input ng-model="roommate.lastname" type="text" placeholder="Last Name">
+    <input ng-model="roommate.email" type="text" placeholder="Email">
+    <button>Add</button>
+  </form> 
+</div>
 <button ng-click="goBack()">Go Back</button>
