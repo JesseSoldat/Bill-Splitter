@@ -1,6 +1,10 @@
 ## Welcome to My Project
 
-> I am your Readme.md file, you should probably update me.
+This was a project where I worked in a group with other Front End and Back End students during a Hackathon. This app is used for roommates who want an easy way to split up the monthly bills.   
+
+Angular / SASS / HTML
+
+https://bill-splitter.surge.sh/#/
 
 
 ## Usage
